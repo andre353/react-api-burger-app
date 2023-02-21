@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import Container from './components/Container/Container';
+import Header from './components/Header/Header';
 
 export const App = () => {
-  const [count, setCount] = useState(0);
 
   return (
     <>
-      <header></header>
+      <Header />
       <main>
-        <nav></nav>
+        <nav>
+          <Container className="navigation_container" />
+        </nav>
         <section></section>
       </main>
       <footer></footer>
