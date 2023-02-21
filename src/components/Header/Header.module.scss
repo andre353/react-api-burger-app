@@ -17,6 +17,7 @@
 
   &__container {
     max-width: 100%;
+    margin: 0 auto;
     @media (min-width: 768px) {
       max-width: calc(562px + var(--padding-container) * 2);    
     }

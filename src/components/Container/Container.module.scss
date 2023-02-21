@@ -1,25 +1,8 @@
 .container {
-  --container: 300px;
+  --container: 1290px;
   --padding-container: 10px;
 
-  max-width: calc(var(--container) + var(--padding-container) * 2);
+  max-width: calc(var(--container) + (var(--padding-container)*2));
   padding: 0 var(--padding-container);
-  margin: 0 auto;
-
-  @media (min-width: 480px) {
-    --container: 640px;
-  }  
-  
-  @media (min-width: 768px) {
-    --padding-container: 64px
-  }  
-  
-  @media (min-width: 1024px) {
-    --container: 960px;
-    --padding-container: 32px
-  }  
-  
-  @media (min-width: 1360px) {
-    --container: 1290px;
-  }  
+  margin: 0 auto; 
 }
