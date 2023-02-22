@@ -22,7 +22,7 @@ const OrderGoods = ({item}) => {
         </p>
       </div>
 
-      <Count count={12} />
+      <Count count={0} />
     </li>
   );
 };
