@@ -1,9 +1,12 @@
-import React from 'react'
-import { API_URI } from '../../consts'
-import _ from './Product.module.scss'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { API_URI } from '../../consts';
+import { addProduct } from '../../store/order/orderSlice';
+import _ from './Product.module.scss';
 
-const Product = ({item}) => {
-  const Good = item.category ? (
+const Product = ({ item }) => {
+  const dispatch = useDispatch();
+  const card = item.category ? (
     <article className={_.product}>
       <img
         src={`${API_URI}${item.image}`}
@@ -12,7 +15,8 @@ const Product = ({item}) => {
       />
 
       <p className={_.product__price}>
-        {item.price}<span className={_.currency}>₽</span>
+        {item.price}
+        <span className={_.currency}>₽</span>
       </p>
 
       <h3 className={_.product__title}>
@@ -21,12 +25,18 @@ const Product = ({item}) => {
 
       <p className={_.product__weight}>{item.weight}г</p>
 
-      <button className={_.product__add} type='button'>
-        Добавить
-      </button>
+      <button
+        className={_.product__add}
+        type='button'
+        onClick={() => {
+          dispatch(addProduct({id: item.id}))
+        }}
+      >Добавить</button>
     </article>
-  ) : 'Товар закончился'
-  return Good
-}
+  ) : (
+    'Товар закончился'
+  );
+  return card;
+};
 
-export default Product
+export default Product;
