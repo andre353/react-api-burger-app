@@ -112,5 +112,15 @@
       background-color: #F9F9F9;
       color: #ACACAC;
     }
-  }  
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 145px);
+    gap: 10px;
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(auto-fit, 300px);
+      gap: 30px;
+    }
+  }
 }

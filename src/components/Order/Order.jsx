@@ -1,6 +1,5 @@
 import React from 'react'
 import _ from './Order.module.scss'
-import cn from 'classnames'
 import OrderGoods from '../OrderGoods/OrderGoods';
 
 const OrderList = [
@@ -18,9 +17,7 @@ const Order = () => {
         </div>
 
         <div className={_.order__wrap_list}>
-          <ul className={_.order__list}>
-            {OrderList.map((item, i) => <OrderGoods item={item} key={i} />)}
-          </ul>
+          <OrderGoods orderList={OrderList}/>
 
           <div className={_.order__total}>
             <p>Итого</p>
