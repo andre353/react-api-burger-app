@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URI, POSTFIX } from '../../consts';
 
 const initialState = {
-  category: [],
+  categories: [],
   error: '',
   activeCategory: 0,
 };
@@ -32,7 +32,7 @@ const categorySlice = createSlice({
       })
       .addCase(categoryRequestAsync.fulfilled, (state, action) => {
         state.error = '';
-        state.category = action.payload;
+        state.categories = action.payload;
       })
       .addCase(categoryRequestAsync.rejected, (state, { payload }) => {
         state.error = payload.error;

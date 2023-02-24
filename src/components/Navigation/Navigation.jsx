@@ -7,7 +7,7 @@ import { categoryRequestAsync, changeCategory } from '../../store/category/categ
 import { API_URI } from '../../consts';
 
 const Navigation = () => {
-  const {category, activeCategory} = useSelector((state) => state.category)
+  const {categories, activeCategory} = useSelector((state) => state.category)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Navigation = () => {
         <div className={_.navigation__container}>
           <ul className={_.navigation__list}>
             {
-              category.map((item, i) => (
+              categories.map((item, i) => (
                 <li className={_.navigation__item} key={item.title}>
                   <button 
                     className={cn(

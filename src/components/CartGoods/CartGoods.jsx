@@ -1,11 +1,11 @@
 import React from 'react';
 import Count from '../Count/Count';
-import _ from './OrderGoods.module.scss';
+import _ from './CartGoods.module.scss';
 
-const OrderGoods = ({orderList}) => {
+const CartGoods = ({cartList}) => {
   return (
     <ul className={_.order__list}>
-      {orderList.map((item, i) =>
+      {cartList.map((item, i) =>
         <li className={_.goods__item} item={item} key={i}>
           <img
             className={_.goods__image}
@@ -31,4 +31,4 @@ const OrderGoods = ({orderList}) => {
   );
 };
 
-export default OrderGoods;
+export default CartGoods;

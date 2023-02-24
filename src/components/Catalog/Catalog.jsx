@@ -2,36 +2,33 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productRequestAsync } from '../../store/product/productSlice';
 import Container from '../Container/Container';
-import Order from '../Order/Order';
-import Product from '../Cards/Cards';
+import Cart from '../Cart/Cart';
 import _ from './Catalog.module.scss';
 import Cards from '../Cards/Cards';
 
 const Catalog = () => {
-  const { category, activeCategory } = useSelector((state) => state.category);
-  // console.log("category:", category);
+  const { categories, activeCategory } = useSelector((state) => state.category);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (category.length) {
+    if (categories.length) {
       // after categories have been loaded
-      dispatch(productRequestAsync(category[activeCategory].title));
+      dispatch(productRequestAsync());
+      // dispatch(productRequestAsync(categories[activeCategory].title));
     }
-  }, [category, activeCategory]);
+  }, [categories, activeCategory]);
 
   return (
     <section className={_.catalog}>
       <Container>
         <div className={_.catalog__container}>
-          <Order />
+          <Cart />
           <div className={_.catalog__wrapper}>
             <h2 className={_.catalog__title}>
-              {category[activeCategory]?.rus}
+              {categories[activeCategory]?.rus}
             </h2>
-            <div className={_.catalog__wrap_list}>
-              <Cards />
-            </div>
+            <Cards />            
           </div>
         </div>
       </Container>

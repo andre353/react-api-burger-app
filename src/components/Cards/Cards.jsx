@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { API_URI } from '../../consts';
-import { addProduct } from '../../store/order/orderSlice';
+import { addProduct } from '../../store/cart/cartSlice';
 
 import _ from './Cards.module.scss';
 
@@ -44,7 +44,7 @@ const Cards = () => {
       ))}
     </ul>
   ) : (
-    <h3>Приносим извинения, товар закончился.</h3>    
+    <h3>Приносим извинения, товар закончился.</h3>
   );
   return cards;
 };

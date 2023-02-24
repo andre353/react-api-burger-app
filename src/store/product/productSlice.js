@@ -8,10 +8,13 @@ const initialState = {
 
 export const productRequestAsync = createAsyncThunk(
   'product/fetch',
-  (category) =>
-    fetch(`${API_URI}${POSTFIX}?category=${category}`)
+  (_, {getState}) => {
+    const {categories, activeCategory} = getState().category;
+
+    return fetch(`${API_URI}${POSTFIX}?category=${categories[activeCategory].title}`)
       .then((req) => req.json())
-      .catch((error) => ({ error })),
+      .catch((error) => ({ error }));
+  }
 );
 
 const productsSlice = createSlice({
