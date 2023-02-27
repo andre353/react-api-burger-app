@@ -3,11 +3,12 @@ import _ from './Cart.module.scss';
 import CartGoods from '../CartGoods/CartGoods';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartRequestAsync } from '../../store/cart/cartSlice';
-
-const CartList = ['Супер сырный', 'Картошка фри', 'Жгучий хот-дог'];
+import { openModal } from '../../store/modalDelivery/modalDeliverySlice';
 
 const Cart = () => {
-  const { totalPrice, totalCount, cartList, cartGoods} = useSelector((state) => state.cart);
+  const { totalPrice, totalCount, cartList, cartGoods } = useSelector(
+    (state) => state.cart,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,7 +35,15 @@ const Cart = () => {
             </p>
           </div>
 
-          <button className={_.order__submit}>Оформить заказ</button>
+          <button
+            className={_.order__submit}
+            disabled={cartGoods.length === 0}
+            onClick={() => {
+              dispatch(openModal())
+            }}
+          >
+            Оформить заказ
+          </button>
 
           <div className={_.order__apeal}>
             <p className={_.order__text}>Бесплатная доставка</p>

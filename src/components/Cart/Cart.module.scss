@@ -122,13 +122,19 @@
   &__submit {
     width: 100%;
     padding: 9px;
-    background: #FF7020;
+    background-color: #FF7020;
     border-radius: 8px;
     font-weight: 400;
     font-size: 12px;
     line-height: 100%;
     color: #FFFFFF;
     margin-bottom: 8px;
+    &:disabled {
+      background-color: #bfbfc0;
+      color: #000;
+      opacity: .5;
+      cursor: not-allowed;
+    }
     @media (min-width: 1024px) {
       padding: 1px;
       height: 40px;
