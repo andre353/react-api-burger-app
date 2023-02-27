@@ -9,9 +9,9 @@ const initialState = {
 export const productRequestAsync = createAsyncThunk(
   'product/fetch',
   (_, {getState}) => {
-    const {categories, activeCategory} = getState().category;
+    const {categories, activeCategoryIndex} = getState().category;
 
-    return fetch(`${API_URI}${POSTFIX}?category=${categories[activeCategory].title}`)
+    return fetch(`${API_URI}${POSTFIX}?category=${categories[activeCategoryIndex].title}`)
       .then((req) => req.json())
       .catch((error) => ({ error }));
   }

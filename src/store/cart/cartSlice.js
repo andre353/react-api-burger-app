@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { API_URI, POSTFIX } from '../../consts';
+import { calcTotal } from '../utils/calcTotal';
 
 const initialState = {
   cartList: JSON.parse(localStorage.getItem('cart') || '[]'), // [{id: "8818264880", count: 1}, {id: "3184803604", count: 1}]
@@ -22,9 +23,9 @@ export const localStorageMiddleware = (store) => (next) => (action) => {
 export const cartRequestAsync = createAsyncThunk(
   'cart/fetch', 
   (_, { getState }) => {
-    const listId = getState().cart.cartList.map((item) => item.id);
-
-    return fetch(`${API_URI}${POSTFIX}?list=${listId}`)
+    const idsList = getState().cart.cartList.map((item) => item.id);
+    // вернули из базы
+    return fetch(`${API_URI}${POSTFIX}?list=${idsList}`)
       .then((req) => req.json())
       .catch((error) => ({ error }));
   }
@@ -34,15 +35,41 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    // after addProduct, localStorageMiddleware adds goods to the localStorage
     addProduct: (state, action) => {
-      const product = state.cartList.find(
+      const productCartList = state.cartList.find(
         (item) => item.id === action.payload.id,
       );
 
-      if (product) {
-        product.count += 1;
+      if (productCartList) {
+        productCartList.count += 1;
+
+        const productCartGoods = state.cartGoods.find(item =>
+          item.id === action.payload.id);
+          // актуализируем count в cartGoods
+        productCartGoods.count = productCartList.count;
+        [state.totalCount, state.totalPrice] = calcTotal(state.cartGoods); 
       } else {
+        // добавили в базу
         state.cartList.push({ ...action.payload, count: 1 });
+      }
+    },
+    removeProduct: (state, action) => {
+      const productCartList = state.cartList.find(
+        (item) => item.id === action.payload.id,
+      );
+
+      if (productCartList.count > 1) {
+        productCartList.count -= 1;
+
+        const productCartGoods = state.cartGoods.find(item =>
+          item.id === action.payload.id);
+          // актуализируем count в cartGoods
+        productCartGoods.count = productCartList.count;
+        [state.totalCount, state.totalPrice] = calcTotal(state.cartGoods); 
+      } else {
+        // добавили в базу
+        state.cartList = state.cartList.filter(item => item.id !== action.payload.id);
       }
     },
   },
@@ -59,13 +86,17 @@ const cartSlice = createSlice({
             .find(product => product.id === item.id);
 
           product.count = item.count;
-
+          // console.log("product count: ", product.count);
           return product;
         })
         state.error = '';
         state.cartGoods = cartProducts;
         state.totalCount = 0;
-        state.totalPrice = 0;       
+        [state.totalCount, state.totalPrice] = calcTotal(state.cartGoods);      
+        // state.totalCount = state.cartGoods.reduce(
+        //   (acc, item) => acc + item.count, 0);
+        // state.totalPrice = state.cartGoods.reduce(
+        //   (acc, item) => acc + item.count * item.price, 0);       
       })
       .addCase(cartRequestAsync.rejected, (state, {payload}) => {
         state.error = payload.error;
@@ -73,5 +104,5 @@ const cartSlice = createSlice({
   }
 });
 
-export const { addProduct } = cartSlice.actions;
+export const { addProduct, removeProduct } = cartSlice.actions;
 export default cartSlice.reducer;

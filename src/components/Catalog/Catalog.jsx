@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { productRequestAsync } from '../../store/product/productSlice';
+import { productRequestAsync } from '../../store/products/productSlice';
 import Container from '../Container/Container';
 import Cart from '../Cart/Cart';
 import _ from './Catalog.module.scss';
 import Cards from '../Cards/Cards';
 
 const Catalog = () => {
-  const { categories, activeCategory } = useSelector((state) => state.category);
+  const { categories, activeCategoryIndex } = useSelector((state) => state.category);
 
   const dispatch = useDispatch();
 
@@ -17,7 +17,7 @@ const Catalog = () => {
       dispatch(productRequestAsync());
       // dispatch(productRequestAsync(categories[activeCategory].title));
     }
-  }, [categories, activeCategory]);
+  }, [categories, activeCategoryIndex]);
 
   return (
     <section className={_.catalog}>
@@ -26,9 +26,9 @@ const Catalog = () => {
           <Cart />
           <div className={_.catalog__wrapper}>
             <h2 className={_.catalog__title}>
-              {categories[activeCategory]?.rus}
+              {categories[activeCategoryIndex]?.rus}
             </h2>
-            <Cards />            
+            <Cards />
           </div>
         </div>
       </Container>

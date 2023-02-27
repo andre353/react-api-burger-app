@@ -3,11 +3,11 @@ import _ from './Navigation.module.scss';
 import cn from 'classnames';
 import Container from '../Container/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import { categoryRequestAsync, changeCategory } from '../../store/category/categorySlice';
+import { categoryRequestAsync, changeCategory } from '../../store/categories/categorySlice';
 import { API_URI } from '../../consts';
 
 const Navigation = () => {
-  const {categories, activeCategory} = useSelector((state) => state.category)
+  const {categories, activeCategoryIndex} = useSelector((state) => state.category)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Navigation = () => {
                   <button 
                     className={cn(
                       _.navigation__button,
-                      activeCategory === i ? _.navigation__button_active : ''
+                      activeCategoryIndex === i ? _.navigation__button_active : ''
                     )}
                     style={{backgroundImage: `url(${API_URI}${item.image})`}}
                     onClick={() => {

@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addProduct, removeProduct } from '../../store/cart/cartSlice';
 import _ from './Count.module.scss';
 
-const Count = ({count}) => {
-  const [counter, setCount] = useState(count)
+const Count = ({count, id}) => {
+  const dispatch = useDispatch()
 
   const addCount = () => {
-    setCount(counter => counter + 1);
-  }
-
+    dispatch(addProduct({id}));
+  };
+  
   const removeCount = () => {
-    if (counter > 1) {
-      setCount(counter => counter - 1);
-    }
+    dispatch(removeProduct({id}));
   }
 
   return (
     <div className={_.count}>
-      <button className={_.count__minus} onClick={removeCount} disabled={count === 1}>-</button>
-      <p className={_.count__amount}>{counter}</p>
+      {/* <button className={_.count__minus} onClick={removeCount} disabled={count === 1}>-</button> */}
+      <button className={_.count__minus} onClick={removeCount}>-</button>
+      <p className={_.count__amount}>{count}</p>
       <button className={_.count__plus} onClick={addCount}>+</button>
     </div>
   );

@@ -1,30 +1,31 @@
 import React from 'react';
+import { API_URI } from '../../consts';
 import Count from '../Count/Count';
 import _ from './CartGoods.module.scss';
 
-const CartGoods = ({cartList}) => {
+const CartGoods = ({cartGoods}) => {
   return (
     <ul className={_.order__list}>
-      {cartList.map((item, i) =>
-        <li className={_.goods__item} item={item} key={i}>
+      {cartGoods.map(({title, price, id, image, count, weight}) =>
+        <li className={_.goods__item} key={id}>
           <img
             className={_.goods__image}
-            src='img/burger_1.jpg'
-            alt={item}
+            src={`${API_URI}${image}`}
+            alt={title}
           />
 
           <div className={_.goods}>
-            <h3 className={_.goods__title}>{item}</h3>
+            <h3 className={_.goods__title}>{title}</h3>
 
-            <p className={_.goods__weight}>512г</p>
+            <p className={_.goods__weight}>{weight}г</p>
 
             <p className={_.goods__price}>
-              1279
-              <span className={_.currency}>₽</span>
+              {price}
+              <span className={_.currency}>&nbsp;₽</span>
             </p>
           </div>
 
-          <Count count={0} />
+          <Count count={count} id={id}/>
         </li>
       )}
     </ul>  

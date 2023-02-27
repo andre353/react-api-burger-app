@@ -7,12 +7,12 @@ import { cartRequestAsync } from '../../store/cart/cartSlice';
 const CartList = ['Супер сырный', 'Картошка фри', 'Жгучий хот-дог'];
 
 const Cart = () => {
-  const { totalPrice, totalCount } = useSelector((state) => state.cart);
+  const { totalPrice, totalCount, cartList, cartGoods} = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(cartRequestAsync());
-  }, []);
+    dispatch(cartRequestAsync()); // функтор=функциональный объект
+  }, [cartList.length]);
 
   return (
     <div className={_.order}>
@@ -24,7 +24,7 @@ const Cart = () => {
         </div>
 
         <div className={_.order__wrap_list}>
-          <CartGoods cartList={CartList} />
+          <CartGoods cartGoods={cartGoods} />
 
           <div className={_.order__total}>
             <p>Итого</p>
