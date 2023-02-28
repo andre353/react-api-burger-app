@@ -48,7 +48,7 @@ const Footer = () => {
           </address>
 
           <div className={styles.development}>
-            <p>©React-App, 2022</p>
+            <p>©React-App, {new Date().getFullYear()}</p>
             <p>Design: <a href="#">Anastasia</a></p>
             <p>Developer: <a href="#">Eva</a></p>
           </div>
