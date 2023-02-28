@@ -16,7 +16,7 @@
   }
 
   &__container {
-    max-width: 100%;
+    max-width: 70%;
     margin: 0 auto;
     @media (min-width: 768px) {
       max-width: calc(562px + var(--padding-container) * 2);    
@@ -38,7 +38,7 @@
     text-align: center;
     color: #FFFFFF;
     
-    @media (min-width: 480px) {
+    @media (min-width: 580px) {
       padding-bottom: 0;
       padding-left: 180px;
       padding-top: 27px;

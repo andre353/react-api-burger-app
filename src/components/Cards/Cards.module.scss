@@ -116,10 +116,10 @@
 
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 145px);
+    grid-template-columns: repeat(auto-fit, minmax(145px, auto));
     gap: 10px;
     @media (min-width: 1024px) {
-      grid-template-columns: repeat(auto-fit, 300px);
+      grid-template-columns: repeat(auto-fit, minmax(300px, auto));
       gap: 30px;
     }
   }
