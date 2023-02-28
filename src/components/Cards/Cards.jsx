@@ -6,7 +6,7 @@ import { addProduct } from '../../store/cart/cartSlice';
 import _ from './Cards.module.scss';
 
 const Cards = () => {
-  const { products } = useSelector((state) => state.product);
+  const { products, flagProducts } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const cards = products.length ? (
     <ul className={_.product__list}>
@@ -44,7 +44,7 @@ const Cards = () => {
       ))}
     </ul>
   ) : (
-    <h3>Приносим извинения, товар закончился.</h3>
+    flagProducts && <h3>Приносим извинения, товар закончился.</h3>
   );
   return cards;
 };

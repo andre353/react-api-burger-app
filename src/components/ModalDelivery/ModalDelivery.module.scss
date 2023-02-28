@@ -5,9 +5,15 @@
   cursor: pointer;
   overflow-y: auto;
   display: flex; /*aligns vertically*/
+  z-index: 999;
 }
 
-.modal__close {
+.notification {
+  color: #F86310;
+  font-size: 14px;
+}
+
+.close {
   color: #B1B1B1;
   position: absolute;
   top: 10px;
@@ -18,12 +24,12 @@
   transition: color .3s ease-in-out;
 }
 
-.modal__close:hover {
+.close:hover {
   color: #FF7020;
 }
 
 
-.modal__close:focus-visible {
+.close:focus-visible {
   color: #FF7020;
   outline-color: #FF7020;
 }
@@ -214,7 +220,7 @@
     padding: 20px;
   }
 
-  .modal__close {
+  .close {
     top: 24px;
     right: 24px;
   }

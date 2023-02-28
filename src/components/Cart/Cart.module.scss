@@ -1,5 +1,6 @@
 .order {
   position: relative;
+  z-index: 5;
   @media (min-width: 768px) {
     width: 145px;
     transition: width 0.06s ease-in-out;

@@ -1,8 +1,13 @@
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitForm, updateFormValue } from '../../store/form/formSlice';
+import {
+  changeIsFormTouched,
+  submitForm,
+  updateFormValue,
+  validateForm,
+} from '../../store/form/formSlice';
 import { closeModal } from '../../store/modalDelivery/modalDeliverySlice';
-import style from './ModalDelivery.module.css';
+import style from './ModalDelivery.module.scss';
 
 export const ModalDelivery = () => {
   const { isOpen } = useSelector((state) => state.modal);
@@ -17,11 +22,18 @@ export const ModalDelivery = () => {
         value: e.target.value,
       }),
     );
+    dispatch(validateForm());
+    dispatch(changeIsFormTouched());
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(submitForm({...form, cartList})); // данные с инпутов из bd + localStorage
+    dispatch(validateForm());
+
+    if (Object.keys(form.notifications).length === 0 && form.isFormTouched) {
+      dispatch(submitForm({ ...form, cartList })); // данные с инпутов из bd + localStorage
+    }
+    // dispatch(changeIsFormTouched());
   };
 
   return (
@@ -41,22 +53,28 @@ export const ModalDelivery = () => {
 
             <form className={style.form} id='delivery' onSubmit={handleSubmit}>
               <fieldset className={style.fieldset}>
-                <input
-                  className={style.input}
-                  type='text'
-                  name='name'
-                  placeholder='Ваше имя'
-                  value={form.name}
-                  onChange={handleInputChange}
-                />
-                <input
-                  className={style.input}
-                  type='tel'
-                  name='phone'
-                  placeholder='Телефон'
-                  value={form.phone}
-                  onChange={handleInputChange}
-                />
+                <label>
+                  <input
+                    className={style.input}
+                    type='text'
+                    name='name'
+                    placeholder='Ваше имя'
+                    value={form.name}
+                    onChange={handleInputChange}
+                  />
+                  {form.notifications.name && <span className={style.notification}>Заполните поле</span>}
+                </label>
+                <label>
+                  <input
+                    className={style.input}
+                    type='tel'
+                    name='phone'
+                    placeholder='Телефон'
+                    value={form.phone}
+                    onChange={handleInputChange}
+                  />
+                  {form.notifications.phone && <span className={style.notification}>Заполните поле</span>}
+                </label>
               </fieldset>
 
               <fieldset className={style.fieldset_radio}>
@@ -87,30 +105,39 @@ export const ModalDelivery = () => {
 
               {form.format === 'delivery' && (
                 <fieldset className={style.fieldset}>
-                  <input
-                    className={style.input}
-                    type='text'
-                    name='address'
-                    placeholder='Улица, дом, квартира'
-                    value={form.address}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className={classNames(style.input, style.input_half)}
-                    type='number'
-                    name='floor'
-                    placeholder='Этаж'
-                    value={form.floor}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className={classNames(style.input, style.input_half)}
-                    type='number'
-                    name='intercom'
-                    placeholder='Домофон'
-                    value={form.intercom}
-                    onChange={handleInputChange}
-                  />
+                  <label>
+                    <input
+                      className={style.input}
+                      type='text'
+                      name='address'
+                      placeholder='Улица, дом, квартира'
+                      value={form.address}
+                      onChange={handleInputChange}
+                    />
+                    {form.notifications.address && <span className={style.notification}>Заполните поле</span>}
+                  </label>
+                  <label>
+                    <input
+                      className={classNames(style.input, style.input_half)}
+                      type='number'
+                      name='floor'
+                      placeholder='Этаж'
+                      value={form.floor}
+                      onChange={handleInputChange}
+                    />
+                    {form.notifications.floor && <span className={style.notification}>Заполните поле</span>}
+                  </label>
+                  <label>
+                    <input
+                      className={classNames(style.input, style.input_half)}
+                      type='number'
+                      name='intercom'
+                      placeholder='Домофон'
+                      value={form.intercom}
+                      onChange={handleInputChange}
+                    />
+                    {form.notifications.intercom && <span className={style.notification}>Заполните поле</span>}
+                  </label>
                 </fieldset>
               )}
             </form>
@@ -118,10 +145,13 @@ export const ModalDelivery = () => {
             <button className={style.submit} type='submit' form='delivery'>
               Оформить
             </button>
+            {/* {form.isFormTouched && Object.entries(form.notifications).map(([key, err]) => (
+              <p key={key}>{err}</p>
+            ))} */}
           </div>
 
           <button
-            className={style.modal__close}
+            className={style.close}
             type='button'
             onClick={() => {
               dispatch(closeModal());
